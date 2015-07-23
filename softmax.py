@@ -1,4 +1,5 @@
 #!/usr/env/bin python
+# -*- coding: utf-8 -*-
 
 import random
 import numpy as np

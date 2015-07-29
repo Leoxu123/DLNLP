@@ -1,7 +1,5 @@
 import random
 import numpy as np
-import pdb
-from scipy.special import expit
 
 def softmax(x):
     """Softmax function"""
@@ -79,8 +77,24 @@ def normalizeRows(x):
     """ Row normalization function """
     
     ### YOUR CODE HERE
-    normVec = np.sqrt(np.sum(x*x,axis=1))
-    x = (x.T/normVec).T
+    x2 = x*x
     ### END YOUR CODE
+    if len(np.shape(x)) <= 1:
+        return np.sqrt(x2 / np.sum(x2))
     
-    return x
+    return np.sqrt(x2/(np.sum(x2, -1)[:, np.newaxis]))
+
+if __name__=="__main__":
+    print 'softmax test:'
+    print softmax(np.array([[1001,1002],[3,4]]))
+    print softmax(np.array([[-1001,-1002]]))
+
+    print 'sigmoid and its gradients test:'
+    x = np.array([[1, 2], [-1, -2]])
+    f = sigmoid(x)
+    g = sigmoid_grad(f)
+    print f
+    print g
+
+    print 'normalize function test:'
+    print normalizeRows(np.array([[3.0,4.0],[1, 2]]))  # the result should be [[0.6, 0.8], [0.4472, 0.8944]]

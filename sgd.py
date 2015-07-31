@@ -18,13 +18,13 @@ import cPickle as pickle
 def load_saved_params():
     """ A helper function that loads previously saved parameters and resets iteration start """
     st = 0
-    for f in glob.glob("saved_params_*.npy"):
+    for f in glob.glob("params/saved_params_*.npy"):
         iter = int(op.splitext(op.basename(f))[0].split("_")[2])
         if (iter > st):
             st = iter
             
     if st > 0:
-        with open("saved_params_%d.npy" % st, "r") as f:
+        with open("params/saved_params_%d.npy" % st, "r") as f:
             params = pickle.load(f)
             state = pickle.load(f)
         return st, params, state
@@ -32,7 +32,7 @@ def load_saved_params():
         return st, None, None
     
 def save_params(iter, params):
-    with open("saved_params_%d.npy" % iter, "w") as f:
+    with open("params/saved_params_%d.npy" % iter, "w") as f:
         pickle.dump(params, f)
         pickle.dump(random.getstate(), f)
 
